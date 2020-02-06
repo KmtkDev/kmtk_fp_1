@@ -36,7 +36,7 @@ public class Main {
     @Contract(pure = true)
     private static double getSquare() {
         double x = s * b;
-        double y = Math.pow((s - c), 2) * Math.tan(alpha);
+        double y = Math.pow((s - c), 2) * Math.tan((alpha * Math.PI) / 180);
         double z = 0.75 * e * g;
         return Math.round(x + y + z);
     }
