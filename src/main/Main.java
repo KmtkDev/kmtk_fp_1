@@ -1,68 +1,45 @@
 package main;
 
 import org.jetbrains.annotations.Contract;
+import service.Service;
 
 import java.util.Scanner;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
+    private static Service service = new Service();
 
     public static void main(String[] args) {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Расчет площади поперечного сечения наплавленного металла шва").append("\n")
-                .append("для типов C2, C8, C17, C25, У4, У6, У8, Т1, Т6, Т8.").append("\n")
-                .append("Виберите тип шва (C2, C8, C17, C25, У4, У6, У8, Т1, Т6, Т8).").append("\n")
-                .append('_').append("\n");
-
-        System.out.println(sb);
+        System.out.println(service.intro());
 
         String answer = scanner.nextLine();
         switch (answer) {
             case "C2":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения С 2 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getC2());
+                text(answer, getC2());
                 break;
             case "C8":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения С 8 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getC8());
+                text(answer, getC8());
                 break;
             case "C17":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения С 17 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getC17());
+                text(answer, getC17());
                 break;
             case "C25":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения С 25 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getC25());
+                text(answer, getC25());
                 break;
             case "Y4":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения У 4 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getY4());
+                text(answer, getY4());
                 break;
             case "Y6":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения У 6 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getY6());
+                text(answer, getY6());
                 break;
             case "Y8":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения У 8 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getY8());
+                text(answer, getY8());
                 break;
             case "T1":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения T 1 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getT1());
+                text(answer, getT1());
                 break;
             case "T6":
-                System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
-                        "расчетная масса наплавленного металла сварного соединения T 6 по ГОСТ 5264 - 80" + "\n");
-                System.out.println("F = " + getT6());
+                text(answer, getT6());
                 break;
             case "T8":
                 System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
@@ -76,14 +53,20 @@ public class Main {
         scanner.close();
     }
 
+    private static void text(String answer, Object object) {
+        System.out.println("Площадь поперечного сечения наплавленного металла шва и " +
+                "расчетная масса наплавленного металла сварного соединения " + answer + " по ГОСТ 5264 - 80" + "\n");
+        System.out.println("F = " + object);
+    }
+
     @Contract(pure = true)
     private static double getC2() {
+        System.out.println('S');
+        double s = Double.parseDouble(scanner.nextLine());
         System.out.println('B');
         double b = Double.parseDouble(scanner.nextLine());
-        System.out.println('S');
-        double s = Integer.parseInt(scanner.nextLine());
         System.out.println('E');
-        double e = Integer.parseInt(scanner.nextLine());
+        int e = Integer.parseInt(scanner.nextLine());
         System.out.println('G');
         double g = Double.parseDouble(scanner.nextLine());
         scanner.close();
