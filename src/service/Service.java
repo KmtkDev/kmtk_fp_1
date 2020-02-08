@@ -1,6 +1,7 @@
 package service;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
@@ -30,44 +31,34 @@ public class Service {
         String answer = scanner.nextLine();
         switch (answer) {
             case "C2":
-                System.out.println(text(answer));
-                System.out.println("F = " + getC2() + "mm2.");
+                System.out.println(text(answer, getC2()));
                 break;
             case "C8":
-                System.out.println(text(answer));
-                System.out.println("F = " + getC8() + "mm2.");
+                System.out.println(text(answer, getC8()));
                 break;
             case "C17":
-                System.out.println(text(answer));
-                System.out.println("F = " + getC17() + "mm2.");
+                System.out.println(text(answer, getC17()));
                 break;
             case "C25":
-                System.out.println(text(answer));
-                System.out.println("F = " + getC25() + "mm2.");
+                System.out.println(text(answer, getC25()));
                 break;
             case "Y4":
-                System.out.println(text(answer));
-                System.out.println("F = " + getY4() + "mm2.");
+                System.out.println(text(answer, getY4()));
                 break;
             case "Y6":
-                System.out.println(text(answer));
-                System.out.println("F = " + getY6() + "mm2.");
+                System.out.println(text(answer, getY6()));
                 break;
             case "Y8":
-                System.out.println(text(answer));
-                System.out.println("F = " + getY8() + "mm2.");
+                System.out.println(text(answer, getY8()));
                 break;
             case "T1":
-                System.out.println(text(answer));
-                System.out.println("F = " + getT1() + "mm2.");
+                System.out.println(text(answer, getT1()));
                 break;
             case "T6":
-                System.out.println(text(answer));
-                System.out.println("F = " + getT6() + "mm2.");
+                System.out.println(text(answer, getT6()));
                 break;
             case "T8":
-                System.out.println(text(answer));
-                System.out.println("F = " + getT8() + "mm2.");
+                System.out.println(text(answer, getT8()));
                 break;
             default:
                 System.out.println("Вы ничего не выбрали...");
@@ -76,12 +67,14 @@ public class Service {
         scanner.close();
     }
 
-    private String text(String answer) {
-        stringBuilder
+    @NotNull
+    @Contract("_, _ -> !null")
+    private Object text(String s, Object o) {
+        return stringBuilder
                 .append("Площадь поперечного сечения наплавленного металла шва и").append("\n")
                 .append("расчетная масса наплавленного металла сварного соединения").append("\n")
-                .append(answer).append(" по ГОСТ 5264 - 80.").append("\n");
-        return String.valueOf(stringBuilder);
+                .append(s).append(" по ГОСТ 5264 - 80.").append("\n")
+                .append("F = ").append(o).append(" mm2.");
     }
 
     @Contract(pure = true)
@@ -113,7 +106,7 @@ public class Service {
         System.out.println('G');
         G = Double.parseDouble(scanner.nextLine());
         scanner.close();
-        double a = (Math.pow((S - C), 2) * Math.tan((ALPHA * Math.PI) / 180)) / 2;
+        double a = (Math.pow((S - C), 2) * tan(ALPHA)) / 2;
         return Math.round(bs(B, S) + a + eg(E, G));
     }
 
@@ -132,7 +125,7 @@ public class Service {
         System.out.println('G');
         G = Double.parseDouble(scanner.nextLine());
         scanner.close();
-        double a = Math.pow((S - C), 2) * Math.tan((ALPHA * Math.PI) / 180);
+        double a = Math.pow((S - C), 2) * tan(ALPHA);
         return Math.round(bs(B, S) + a + eg(E, G));
     }
 
@@ -149,7 +142,7 @@ public class Service {
         System.out.println('G');
         G = Double.parseDouble(scanner.nextLine());
         scanner.close();
-        double y = Math.pow((S - C), 2) * Math.tan((ALPHA * Math.PI) / 180);
+        double y = Math.pow((S - C), 2) * tan(ALPHA);
         double z = 1.5 * E * G;
         return Math.round(y + z);
     }
@@ -189,7 +182,7 @@ public class Service {
         System.out.println('G');
         G = Double.parseDouble(scanner.nextLine());
         scanner.close();
-        double y = 0.5 * Math.pow((S - C), 2) * Math.tan((ALPHA * Math.PI) / 180);
+        double y = 0.5 * Math.pow((S - C), 2) * tan(ALPHA);
         return Math.round(bs(S, B) + y + eg(E, G));
     }
 
@@ -210,7 +203,7 @@ public class Service {
         System.out.println("E_1");
         E_1 = Integer.parseInt(scanner.nextLine());
         scanner.close();
-        double y = 0.25 * Math.pow((S - C), 2) * Math.tan((ALPHA * Math.PI) / 180);
+        double y = 0.25 * Math.pow((S - C), 2) * tan(ALPHA);
         double z = 0.75 * (E * G + 0.3 * S * E_1);
         return Math.round(bs(S, B) + y + z);
     }
@@ -236,7 +229,7 @@ public class Service {
         System.out.println('E');
         E = Integer.parseInt(scanner.nextLine());
         scanner.close();
-        double y = 0.5 * Math.pow((S - C), 2) * Math.tan((ALPHA * Math.PI) / 180);
+        double y = 0.5 * Math.pow((S - C), 2) * tan(ALPHA);
         double z = 0.75 * E * 0.3 * S;
         return Math.round(bs(S, B) + y + z);
     }
@@ -256,8 +249,8 @@ public class Service {
         System.out.println('E');
         E = Integer.parseInt(scanner.nextLine());
         scanner.close();
-        double w = 0.5 * Math.pow(H, 2) * Math.tan((ALPHA * Math.PI) / 180);
-        double y = 0.5 * Math.pow((S - H - C), 2) * Math.tan((ALPHA * Math.PI) / 180);
+        double w = 0.5 * Math.pow(H, 2) * tan(ALPHA);
+        double y = 0.5 * Math.pow((S - H - C), 2) * tan(ALPHA);
         double z = 1.5 * E * (0.3 * S);
         return (bs(S, B) + w + y + z);
     }
@@ -272,4 +265,8 @@ public class Service {
         return 0.75 * e * g;
     }
 
+    @Contract(pure = true)
+    private double tan(int alpha) {
+        return Math.tan((alpha * Math.PI) / 180);
+    }
 }
